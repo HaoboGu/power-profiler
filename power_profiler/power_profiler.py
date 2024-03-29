@@ -187,10 +187,10 @@ class Probe(pg.QtCore.QThread):
         self.wait(2)
 
 
-class MainWindow(pg.QtGui.QMainWindow):
+class MainWindow(pg.QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowIcon(self.style().standardIcon(pg.QtGui.QStyle.SP_MediaPlay))
+        self.setWindowIcon(self.style().standardIcon(pg.QtWidgets.QStyle.SP_MediaPlay))
         self.setWindowTitle('Power Profiler')
         self.resize(1200, 720)
         self.widget = pg.PlotWidget()
@@ -290,7 +290,7 @@ class MainWindow(pg.QtGui.QMainWindow):
 
         # 🠈🠉🠊🠋←↑→↓⇇⇈⇉⇊
         leftAction = pg.QtGui.QAction('←', self)
-        # leftAction.setIcon(self.style().standardIcon(pg.QtGui.QStyle.SP_ArrowLeft))
+        # leftAction.setIcon(self.style().standardIcon(pg.QtWidgets.QStyle.SP_ArrowLeft))
         # leftAction.setShortcut(pg.QtGui.QKeySequence(pg.QtCore.Qt.Key_Left))
         leftAction.triggered.connect(self.moveLeft)
         self.toolbar.addAction(leftAction)
@@ -300,7 +300,7 @@ class MainWindow(pg.QtGui.QMainWindow):
         leftShortcut.activated.connect(self.moveLeft)
 
         rightAction = pg.QtGui.QAction('→', self)
-        # rightAction.setIcon(self.style().standardIcon(pg.QtGui.QStyle.SP_ArrowRight))
+        # rightAction.setIcon(self.style().standardIcon(pg.QtWidgets.QStyle.SP_ArrowRight))
         rightAction.setShortcut(pg.QtGui.QKeySequence(pg.QtCore.Qt.Key_Right))
         rightAction.triggered.connect(self.moveRight)
         self.toolbar.addAction(rightAction)
@@ -310,14 +310,14 @@ class MainWindow(pg.QtGui.QMainWindow):
         rightShortcut.activated.connect(self.moveRight)
     
         upAction = pg.QtGui.QAction('↑', self)
-        # upAction.setIcon(self.style().standardIcon(pg.QtGui.QStyle.SP_ArrowUp))
+        # upAction.setIcon(self.style().standardIcon(pg.QtWidgets.QStyle.SP_ArrowUp))
         upAction.setToolTip('Move Up (↑)')
         upAction.setShortcut(pg.QtGui.QKeySequence(pg.QtCore.Qt.Key_Up))
         upAction.triggered.connect(self.moveUp)
         self.toolbar.addAction(upAction)
 
         downAction = pg.QtGui.QAction('↓', self)
-        # downAction.setIcon(self.style().standardIcon(pg.QtGui.QStyle.SP_ArrowDown))
+        # downAction.setIcon(self.style().standardIcon(pg.QtWidgets.QStyle.SP_ArrowDown))
         downAction.setToolTip('Move Down (↓)')
         downAction.setShortcut(pg.QtGui.QKeySequence(pg.QtCore.Qt.Key_Down))
         downAction.triggered.connect(self.moveDown)
@@ -388,10 +388,10 @@ class MainWindow(pg.QtGui.QMainWindow):
     def start(self, checked):
         if checked:
             self.probe.start()
-            self.setWindowIcon(self.style().standardIcon(pg.QtGui.QStyle.SP_MediaPlay))
+            self.setWindowIcon(self.style().standardIcon(pg.QtWidgets.QStyle.SP_MediaPlay))
         else:
             self.probe.stop()
-            self.setWindowIcon(self.style().standardIcon(pg.QtGui.QStyle.SP_MediaStop))
+            self.setWindowIcon(self.style().standardIcon(pg.QtWidgets.QStyle.SP_MediaStop))
 
     def freeze(self, checked):
         self.freezed = checked
@@ -480,16 +480,16 @@ class MainWindow(pg.QtGui.QMainWindow):
 
     def handle_error(self, error):
         message = 'No device found' if error == 1 else 'Read failed'
-        flags = pg.QtGui.QMessageBox.Abort | pg.QtGui.QMessageBox.Retry
-        result = pg.QtGui.QMessageBox.critical(self, 'ERROR', message, flags)
-        if result == pg.QtGui.QMessageBox.Retry:
+        flags = pg.QtWidgets.QMessageBox.Abort | pg.QtWidgets.QMessageBox.Retry
+        result = pg.QtWidgets.QMessageBox.critical(self, 'ERROR', message, flags)
+        if result == pg.QtWidgets.QMessageBox.Retry:
             self.probe.start()
         else:
             self.close()
 
 
 def main():
-    app = pg.QtGui.QApplication(sys.argv)
+    app = pg.QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
